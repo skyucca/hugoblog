@@ -2,8 +2,8 @@
 hugo based blog
 ## 新建文章步骤
 - 进入content/posts/目录；
-- 找到“+”符号，点击“Create New File”；
-- 在文件名处输入文件名（最好不要以标点符号结尾）；
+- 右上角，点击“Add file”，“Create New File”；
+- 在文件名处输入文件名（最好不要以标点符号结尾），扩展名为.md；
 - 在正文前首先输入以下内容：
   - 三条短线
   - title: "这里是标题"
