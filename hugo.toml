@@ -1,5 +1,3 @@
-baseURL = 'https://skyucca.github.io/hugoblog/'
+baseURL = ''
 languageCode = 'zh-cn'
 title = '徐天坤的数字记忆馆'
-relativeURLs = true
-canonifyURLs = false
