@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { max-width: 700px; margin: 40px auto; padding: 0 20px; font-family: -apple-system, sans-serif; line-height: 1.8; color: #222; }
-    h1 { margin-bottom: 1em; font-size: 24px; }
+    h1 { margin-bottom: 0.5em; font-size: 24px; }
+    #search-box { width: 100%; box-sizing: border-box; padding: 10px 12px; font-size: 15px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 25px; outline: none; }
+    #search-box:focus { border-color: #0969da; }
     ul { list-style: none; padding: 0; }
     li { margin-bottom: 16px; display: flex; align-items: baseline; }
     a { text-decoration: none; color: #0969da; font-size: 16px; font-weight: 500; }
@@ -16,7 +18,12 @@
 </head>
 <body>
   <h1>{{ .Site.Title }}</h1>
-  <ul>
+
+  <!-- 搜索输入框 -->
+  <input type="text" id="search-box" placeholder="搜索文章标题或正文关键字..." autocomplete="off">
+
+  <!-- 文章列表与实时搜索结果渲染容器 -->
+  <ul id="posts-list">
     {{ range .Site.RegularPages }}
       <li>
         <span class="date">{{ .Date.Format "2006-01-02" }}</span>
@@ -24,5 +31,44 @@
       </li>
     {{ end }}
   </ul>
+
+  <script>
+    let searchIndex = [];
+    const searchBox = document.getElementById('search-box');
+    const postsList = document.getElementById('posts-list');
+    const defaultListHTML = postsList.innerHTML;
+
+    // 异步加载全站搜索索引
+    fetch('./index.json')
+      .then(res => res.json())
+      .then(data => { searchIndex = data; })
+      .catch(err => console.error("Index load failed:", err));
+
+    searchBox.addEventListener('input', function() {
+      const keyword = this.value.trim().toLowerCase();
+      if (!keyword) {
+        postsList.innerHTML = defaultListHTML;
+        return;
+      }
+
+      // 实时匹配标题或正文字符
+      const results = searchIndex.filter(post => 
+        (post.title && post.title.toLowerCase().includes(keyword)) ||
+        (post.content && post.content.toLowerCase().includes(keyword))
+      );
+
+      if (results.length === 0) {
+        postsList.innerHTML = '<li style="color: #999;">未找到匹配的文章</li>';
+        return;
+      }
+
+      postsList.innerHTML = results.map(post => `
+        <li>
+          <span class="date">${post.date}</span>
+          <a href="${post.permalink}">${post.title}</a>
+        </li>
+      `).join('');
+    });
+  </script>
 </body>
 </html>
