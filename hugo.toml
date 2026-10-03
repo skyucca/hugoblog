@@ -1,3 +1,10 @@
 baseURL = ''
 languageCode = 'zh-cn'
 title = '徐天坤的数字记忆馆'
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[outputFormats.JSON]
+  mediaType = "application/json"
+  baseName = "index"
+  isPlainText = true
