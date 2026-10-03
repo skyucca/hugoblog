@@ -1,0 +1,11 @@
+[
+  {{- range $i, $e := .Site.RegularPages -}}
+  {{- if $i }},{{ end -}}
+  {
+    "title": {{ .Title | jsonify }},
+    "permalink": {{ printf "./posts/%s/" .File.ContentBaseName | jsonify }},
+    "date": {{ .Date.Format "2006-01-02" | jsonify }},
+    "content": {{ .Plain | jsonify }}
+  }
+  {{- end -}}
+]
