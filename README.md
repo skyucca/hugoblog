@@ -1,7 +1,7 @@
 # hugoblog
 hugo based blog
 ## 新建文章步骤
-- 进入hugoblog/posts/目录；
+- 进入content/posts/目录；
 - 找到“+”符号，点击“Create New File”；
 - 在文件名处输入文件名（最好不要以标点符号结尾）；
 - 在正文前首先输入以下内容：
